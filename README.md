@@ -1,10 +1,11 @@
 # drakonoid
 Android adapted version of Drakon Editor
 
-#================================================================================
+==================================
 Drakonoid - Android version of Drakon Editor software
 Now it reuses Androwish runtime
-#================================================================================
+==================================
+
 
 Requirements:
 
@@ -16,9 +17,9 @@ Requested API level from project.properties: 14 (Android 4.0)
 CPUs supported for native shared libraries (jni/Application.mk): armeabi x86
 Joystick support is available for API level >=12 devices.
 
-================================================================================
+==================================
  How it works
-================================================================================
+==================================
 
 - This project is TCL/tk application re-using the installed components of AndroWish in another app
 - The required Java code is an empty class deriving from tk.tcl.wish.AndroWish
@@ -28,9 +29,9 @@ Joystick support is available for API level >=12 devices.
 - To refer to your packaged Tcl files [file dirname [info script]] should be
   used
 
-================================================================================
+==================================
  Building the package
-================================================================================
+==================================
 
 1. Refresh the project settings using the android command from Android SDK:
 
