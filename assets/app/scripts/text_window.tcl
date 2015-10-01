@@ -75,7 +75,6 @@ proc tw_init { window data } {
 	$tw_text insert 1.0 $userinput
 	ttk::button $window.root.ok -text [ mc2 "Ok" ] -command ui::tw_ok
 
-	ttk::label $window.root.hint -text $hint
 	ttk::button $window.root.cancel -text [ mc2 "Cancel" ] -command ui::tw_close
 	
 	grid columnconfigure $window.root 2 -weight 1 -minsize 50
@@ -83,7 +82,6 @@ proc tw_init { window data } {
 	
 	grid $window.root.entry -row 1 -column 1 -sticky nwse -columnspan 3 -padx 5 -pady 5
 	grid $window.root.ok -row 2 -column 1 -padx 10 -pady 10
-	grid $window.root.hint -row 2 -column 2 -sticky w
 	grid $window.root.cancel -row 2 -column 3 -padx 10 -pady 10
 	
 	mw::bind_shortcut $window ui::shortcut_handler
