@@ -74,11 +74,7 @@ proc tw_init { window data } {
 	set tw_text [ create_textbox $window.root.entry ]
 	$tw_text insert 1.0 $userinput
 	ttk::button $window.root.ok -text [ mc2 "Ok" ] -command ui::tw_ok
-	if { [ ui::is_mac ] } {
-		set hint [ mc2 "Command-Enter to save and close" ]
-	} else {
-		set hint [ mc2 "Control-Enter to save and close" ]
-	}
+
 	ttk::label $window.root.hint -text $hint
 	ttk::button $window.root.cancel -text [ mc2 "Cancel" ] -command ui::tw_close
 	
