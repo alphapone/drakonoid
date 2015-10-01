@@ -54,11 +54,6 @@ proc update_description { ig1 ig2 } {
 	variable dia_edit_butt
 	set descr [ mwc::get_dia_description ]
 	change_description $descr 1
-	if { [ mwc::get_current_dia ] == "" } {
-		#$dia_edit_butt configure -state disabled
-	} else {
-		#$dia_edit_butt configure -state normal
-	}
 }
 
 proc enable_undo { name } {
@@ -197,21 +192,11 @@ proc create_listbox { name var_name } {
 	frame $name -borderwidth 1 -relief sunken
 	
 	set list_path [ join [ list $name list ] "." ]
-	set vscroll_path [ join [ list $name vscroll ] "." ]
 
-	
-	# Scrollbar.
-	ttk::scrollbar $vscroll_path -command "$list_path yview" -orient vertical
 	
 	# Listbox.
-	listbox $list_path -yscrollcommand "$vscroll_path set" -bd 0 -highlightthickness 0 -listvariable $var_name
+	listbox $list_path -bd 0 -highlightthickness 0 -listvariable $var_name
 
-	# Put the diagram list and its scrollbar together.
-	grid columnconfigure $name 1 -weight 1
-	grid rowconfigure $name 1 -weight 1	
-	grid $list_path -row 1 -column 1 -sticky nswe
-	grid $vscroll_path -row 1 -column 2 -sticky ns
-	
 	return $list_path
 }
 
@@ -231,7 +216,7 @@ proc acc { button } {
 proc create_ui { } {
 	variable diagram_list
 	variable canvas
-	variable dia_desc
+#	variable dia_desc
 	variable dia_edit_butt
 	variable status
 	variable search_main
@@ -276,17 +261,6 @@ proc create_ui { } {
 	ttk::frame .root.pnd.left.nav
 	pack .root.pnd.left.nav -anchor n -side top -fill x
 	
-	#set back [ button .root.pnd.left.nav.back -image [ load_gif back.gif ] \
-	#	-command back::come_back -bd 3 -relief flat -highlightthickness 0 ]
-	#bind_popup $back [ mc2 "Back" ]
-	
-	#set forward [ button .root.pnd.left.nav.forward -image [ load_gif forward.gif ] \
-	#	-command back::go_forward -bd 3 -relief flat -highlightthickness 0 ]
-	#bind_popup $forward [ mc2 "Forward" ]
-	#pack $forward -side right	
-	#pack $back -side right	
-	
-	#command_button .root.pnd.left.nav.descr description.gif mwc::file_description [ mc2 "File description" ]
 
 	ttk::button .root.pnd.left.nav.dia -text [ mc2 "New diagram" ] -command mwc::new_dia
 	ttk::button .root.pnd.left.nav.folder -text [ mc2 "Folder" ] -command mwc::new_folder
@@ -300,16 +274,9 @@ proc create_ui { } {
 	
 	# Current object description edit.
 	set description_frame [ ttk::frame .root.pnd.left.description_frame ]
-	#set dia_desc_label [ ttk::label $description_frame.dia_desc_label -text [ mc2 "Description:" ] ]
-        #set dia_edit_butt [ ttk::button $description_frame.dia_edit_butt -text [ mc2 "Edit..." ] -command mwc::dia_properties ]
 	pack $description_frame -fill x
-	#pack $dia_desc_label -pady 2 -side left
-	#pack $dia_edit_butt -pady 2 -side right
 	
 	
-	set dia_desc [ text .root.pnd.left.description -width 10 -height 4 \
-		-highlightthickness 0 -borderwidth 1 -relief sunken -state disabled -font main_font -wrap word ]
-	pack $dia_desc -fill both
 	
 	# Right pane: horizontal splitter
 	ttk::panedwindow .root.pnd.right -orient vertical
@@ -503,10 +470,8 @@ proc create_ui { } {
 	#bind .mainmenu <<MenuSelect>> mw::update_menu
 	#bind . <FocusIn> mw::main_focus_in
 	#bind . <Destroy> mwc::save_view
-	bind $main_tree [ right_up_event ] { mw::dia_popup %W %X %Y }
-	bind $main_tree <Double-ButtonPress-1> { mwc::rename_dia }
-	bind $dia_desc <Double-ButtonPress-1> { mwc::dia_properties }
-	bind_popup $dia_desc [ mc2 "Double click to edit" ]
+	bind $main_tree <Double-ButtonPress-1> { mw::dia_popup %W %X %Y }
+	bind $main_tree [ right_up_event ] { mwc::rename_dia }
 
 	bind $canvas <Configure> { mw::on_canvas_configure %w %h }
 	bind $canvas <Motion> { mw::canvas_motion %W %x %y %s }
@@ -1052,10 +1017,10 @@ proc change_description { new replay } {
 	variable dia_desc
 	
 	
-	$dia_desc configure -state normal
-	$dia_desc  delete 1.0 end
-	$dia_desc  insert 1.0 $new
-	$dia_desc configure -state disabled
+	#$dia_desc configure -state normal
+	#$dia_desc  delete 1.0 end
+	#$dia_desc  insert 1.0 $new
+	#$dia_desc configure -state disabled
 }
 
 proc update_menu { } {
